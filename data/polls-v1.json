@@ -3,7 +3,7 @@
   "model": "polls.question",
   "pk": 1,
   "fields": {
-    "question_text": "Which animal is also known as coconut dog in Thai",
+    "question_text": "Which animal is the cutest here?",
     "pub_date": "2024-08-24T07:56:24Z"
   }
 },
@@ -12,7 +12,7 @@
   "pk": 1,
   "fields": {
     "question": 1,
-    "choice_text": "Noppo",
+    "choice_text": "Pygmy Marmoset",
     "votes": 0
   }
 },
@@ -30,7 +30,7 @@
   "pk": 3,
   "fields": {
     "question": 1,
-    "choice_text": "Capyplara",
+    "choice_text": "Red panda",
     "votes": 0
   }
 },
@@ -39,7 +39,7 @@
   "pk": 4,
   "fields": {
     "question": 1,
-    "choice_text": "All are correct",
+    "choice_text": "Chinchilla",
     "votes": 0
   }
 }
