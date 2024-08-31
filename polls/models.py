@@ -22,6 +22,16 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+    @admin.display(
+        boolean=True,
+        ordering="pub_date",
+        description="Published?",
+    )
+    def is_published(self):
+        """Checking whether this question has publicly active."""
+        now = timezone.now()
+        return now >= self.pub_date
+
     def __str__(self):
         """Display question text when print out the object."""
         return self.question_text

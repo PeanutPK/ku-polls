@@ -21,6 +21,7 @@ class QuestionIndexViewTests(TestCase):
     """
     Tests for `polls.views`
     """
+
     def test_no_questions(self):
         """
         If no questions exist, an appropriate message is displayed.
@@ -47,7 +48,8 @@ class QuestionIndexViewTests(TestCase):
         The detail view of a question with a pub_date in the past
         displays the question's text.
         """
-        past_question = create_question(question_text="Past Question.", days=-5)
+        past_question = create_question(question_text="Past Question.",
+                                        days=-5)
         url = reverse("polls:detail", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
@@ -72,3 +74,12 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(
             response.context["latest_question_list"], [question2, question1], )
+
+    def test_is_published(self):
+        question1 = create_question(question_text="Past question.", days=-5)
+        question2 = Question(question_text="Present question.")
+        question3 = create_question(question_text="Future question.", days=5)
+        question1.end_date = timezone.now() + datetime.timedelta(days=-1)
+        self.assertTrue(question1.is_published())
+        self.assertTrue(question2.is_published())
+        self.assertFalse(question3.is_published())
