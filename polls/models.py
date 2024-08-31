@@ -1,5 +1,5 @@
 import datetime
-
+from django.contrib import admin
 from django.db import models
 from django.utils import timezone
 
@@ -9,12 +9,35 @@ class Question(models.Model):
     1. question_text as the question.
     2. pub_date as the publishing date."""
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    end_date = models.DateTimeField('ended date', blank=True, null=True)
 
+    @admin.display(
+        boolean=True,
+        ordering="pub_date",
+        description="Published recently?",
+    )
     def was_published_recently(self):
         """Check whether this question is publicly active."""
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    @admin.display(
+        boolean=True,
+        ordering="pub_date",
+        description="Published?",
+    )
+    def is_published(self):
+        """Checking whether this question has been published once or not."""
+        now = timezone.now()
+        return now >= self.pub_date
+
+    def can_vote(self):
+        """Checking whether this question is between the voting time."""
+        now = timezone.now()
+        if self.end_date is None:
+            return self.pub_date <= now
+        return self.pub_date <= now <= self.end_date
 
     def __str__(self):
         """Display question text when print out the object."""

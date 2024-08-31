@@ -4,15 +4,24 @@
 
 {% if latest_question_list %}
 <h1>Polls</h1>
-<div>
-    <ul>
-        {% for question in latest_question_list %}
-        <!--Called value of url name detail in polls/urls.py-->
-        <li><a href="{% url 'polls:detail' question.id %}">
-            {{ question.question_text }}</a></li>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
         {% endfor %}
-    </ul>
-</div>
+      </ul>
+    {% endif %}
+    {% for question in latest_question_list %}
+        <div class="question_box">
+        <!--Called value of url name detail in polls/urls.py-->
+        {% if question.can_vote %}
+            <a href="{% url 'polls:detail' question.id %}" class="question_text">{{ question.question_text }}</a>
+        {% elif question.is_published %}
+            <a href="{% url 'polls:results' question.id %}" class="question_text">{{ question.question_text }}</a>
+        {% endif %}
+        <a href="{% url 'polls:results' question.id %}"><div class="index_result">Results</div></a>
+        </div>
+    {% endfor %}
 {% else %}
 <p>No polls are available.</p>
 {% endif %}

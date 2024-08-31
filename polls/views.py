@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Question, Choice
 
@@ -16,6 +17,7 @@ class IndexView(generic.ListView):
         """
         Returns the last five published questions.
         (not including those set to be in the future)
+        Q is for making that query optional.
         """
         return Question.objects.filter(pub_date__lte=timezone.now()
                                        ).order_by("-pub_date")[:5]
@@ -39,6 +41,19 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+
+    if not question.is_published():
+        return render(request, 'polls/detail.html',
+                      {
+                          "question": question,
+                          "error_message": "This question has not published "
+                                           "yet.",
+                      }, )
+
+    if not question.can_vote():
+        messages.error(request, "Voting is not allowed for this question.")
+        return HttpResponseRedirect(reverse('polls:index'))
+
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
