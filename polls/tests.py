@@ -76,10 +76,50 @@ class QuestionIndexViewTests(TestCase):
             response.context["latest_question_list"], [question2, question1], )
 
     def test_is_published(self):
+        """
+        Test for is_published function.
+        1. Question1 for the past question that already ends.
+        2. Question2 for the default question (present time).
+        3. Question3 for the future question.
+        """
         question1 = create_question(question_text="Past question.", days=-5)
-        question2 = Question(question_text="Present question.")
-        question3 = create_question(question_text="Future question.", days=5)
         question1.end_date = timezone.now() + datetime.timedelta(days=-1)
         self.assertTrue(question1.is_published())
+
+        question2 = Question(question_text="Present question.")
         self.assertTrue(question2.is_published())
+
+        question3 = create_question(question_text="Future question.", days=5)
         self.assertFalse(question3.is_published())
+
+    def test_cannot_vote_future_polls(self):
+        """
+        Can't vote for future polls, and the polls shouldn't be shown.
+        """
+        question1 = create_question(question_text="Future question1.", days=5)
+        question2 = create_question(question_text="Future question2.", days=1)
+        response = self.client.get(reverse("polls:index"))
+        self.assertFalse(question1.can_vote())
+        self.assertFalse(question2.can_vote())
+        self.assertContains(response, "No polls are available.")
+
+    def test_cannot_vote_ended_polls(self):
+        """
+        Can't vote for polls that already ends.
+        """
+        question = create_question(question_text="Ended question.", days=-1)
+        question.end_date = timezone.now() + datetime.timedelta(days=-1)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(response.context["latest_question_list"],
+                                 [question])
+        self.assertFalse(question.can_vote())
+
+    def test_can_vote_question(self):
+        """
+        Can vote for currently active questions.
+        """
+        question = create_question(question_text="Ended question.", days=-1)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(response.context["latest_question_list"],
+                                 [question])
+        self.assertTrue(question.can_vote())

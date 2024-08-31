@@ -28,9 +28,16 @@ class Question(models.Model):
         description="Published?",
     )
     def is_published(self):
-        """Checking whether this question has publicly active."""
+        """Checking whether this question has been published once or not."""
         now = timezone.now()
         return now >= self.pub_date
+
+    def can_vote(self):
+        """Checking whether this question is between the voting time."""
+        now = timezone.now()
+        if self.end_date is None:
+            return self.pub_date <= now
+        return self.pub_date <= now <= self.end_date
 
     def __str__(self):
         """Display question text when print out the object."""
