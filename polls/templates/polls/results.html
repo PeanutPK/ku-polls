@@ -3,19 +3,14 @@
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <h1>{{ question.question_text }}</h1>
 
-<div>
-    <ul>
-        {% for choice in question.choice_set.all %}
-        <li>
-            {{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}
-        </li>
-        {% endfor %}
-    </ul>
+<div class="center" style="max-width: 20%; font-size: large">
+    <p class="results"><span>Options</span> <span>Votes</span></p>
+    {% for choice in question.choice_set.all %}
+    <p class="results"><span>{{ choice.choice_text }}</span> <span> {{ choice.votes }}</span></p>
+    {% endfor %}
 </div>
 
 
-<div class="option">
-    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
-    <br>
-    <a href="{% url 'polls:index' %}">Home</a>
+<div>
+    <a href="{% url 'polls:index' %}" class="option">Home</a>
 </div>

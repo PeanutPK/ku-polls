@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -16,9 +16,12 @@ class IndexView(generic.ListView):
         """
         Returns the last five published questions.
         (not including those set to be in the future)
+        Q is for making that query optional.
         """
         return Question.objects.filter(pub_date__lte=timezone.now()
-                                       ).order_by("-pub_date")[:5]
+                                       ).filter(Q(end_date__isnull=True) |
+                                                Q(end_date__gte=timezone.now())
+                                                ).order_by("-pub_date")[:5]
 
 
 class DetailView(generic.DetailView):
