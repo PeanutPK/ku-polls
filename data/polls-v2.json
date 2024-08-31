@@ -27,6 +27,15 @@
   }
 },
 {
+  "model": "polls.question",
+  "pk": 6,
+  "fields": {
+    "question_text": "Is voting enable for this question?",
+    "pub_date": "2024-08-19T07:13:36Z",
+    "end_date": "2024-08-20T07:14:34Z"
+  }
+},
+{
   "model": "polls.choice",
   "pk": 1,
   "fields": {
@@ -59,7 +68,7 @@
   "fields": {
     "question": 1,
     "choice_text": "Chinchilla",
-    "votes": 5
+    "votes": 7
   }
 },
 {
@@ -95,7 +104,7 @@
   "fields": {
     "question": 3,
     "choice_text": "Comedy",
-    "votes": 1
+    "votes": 2
   }
 },
 {
@@ -176,7 +185,7 @@
   "fields": {
     "question": 3,
     "choice_text": "Thriller",
-    "votes": 2
+    "votes": 3
   }
 },
 {
@@ -213,6 +222,24 @@
     "question": 5,
     "choice_text": "Nah",
     "votes": 0
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 22,
+  "fields": {
+    "question": 6,
+    "choice_text": "Yes",
+    "votes": 1
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 23,
+  "fields": {
+    "question": 6,
+    "choice_text": "No",
+    "votes": 1
   }
 }
 ]
