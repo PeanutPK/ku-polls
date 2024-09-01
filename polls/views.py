@@ -1,6 +1,6 @@
 from django.db.models import F
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, Http404
+from django.shortcuts import render, get_object_or_404, Http404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -34,14 +34,17 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def dispatch(self, request, *args, **kwargs):
-        # Try to get the object
+        """
+        Try to get a question object, except error 404;
+        then it will redirect to index page with response 302.
+        """
         try:
             self.object = self.get_object()
             return super().dispatch(request, *args, **kwargs)
         except Http404:
-            # Redirect to another page if the object is not found
-            messages.error(request, "Question does not exist.")
-            return HttpResponseRedirect(reverse('polls:index'))
+            # Temporary redirect to another page if the object is not found
+            messages.error(request, f"Question {kwargs['pk']} does not exist.")
+            return redirect(reverse('polls:index'))
 
 
 class ResultsView(generic.DetailView):
