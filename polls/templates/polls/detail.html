@@ -4,7 +4,17 @@
 {% csrf_token %}
 <fieldset>
     <legend><h1>{{ question.question_text }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <!--Handle an error message-->
+    {% if messages %}
+    <div class="display_message">
+    <ul class="messages" style="color: red; text-align: center">
+      {% for msg in messages %}
+        <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
+      {% endfor %}
+    </ul>
+    </div>
+    {% endif %}
+    <!--Form-->
     {% for choice in question.choice_set.all %}
         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>

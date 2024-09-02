@@ -4,15 +4,15 @@
 
 {% if latest_question_list %}
 <h1>Polls</h1>
+    <!--Handle an error message-->
     {% if messages %}
-    <div class="error_message">
-      <ul class="messages" style="color: red; text-align: center">
-        {% for message in messages %}
-          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-      </ul>
+    <div class="display_message">
+    <ul class="messages" style="color: red; text-align: center">
+      {% for msg in messages %}<p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>{% endfor %}
+    </ul>
     </div>
     {% endif %}
+    <!--Show valid question boxes-->
     {% for question in latest_question_list %}
         <div class="question_box">
         <!--Called value of url name detail in polls/urls.py-->
@@ -25,5 +25,5 @@
         </div>
     {% endfor %}
 {% else %}
-<p>No polls are available.</p>
+    <p>No polls are available.</p>
 {% endif %}

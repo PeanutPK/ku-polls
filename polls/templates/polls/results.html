@@ -2,7 +2,14 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <h1>{{ question.question_text }}</h1>
-
+<!--message-->
+{% if messages %}
+    <div class="display_message">
+    <ul class="messages" style="color: green; text-align: center">
+      {% for msg in messages %}<p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>{% endfor %}
+    </ul>
+    </div>
+{% endif %}
 <div class="center" style="max-width: 20%; font-size: large">
     <p class="results"><span>Options</span> <span>Votes</span></p>
     {% for choice in question.choice_set.all %}
