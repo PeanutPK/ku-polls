@@ -4,8 +4,8 @@
 
 {% if latest_question_list %}
 <h1>Polls</h1>
-    <div class="error_message">
     {% if messages %}
+    <div class="error_message">
       <ul class="messages" style="color: red; text-align: center">
         {% for message in messages %}
           <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
