@@ -56,11 +56,10 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     if not question.is_published():
+        messages.error(request, "This question has not published yet.")
         return render(request, 'polls/detail.html',
                       {
                           "question": question,
-                          "error_message": "This question has not published "
-                                           "yet.",
                       }, )
 
     if not question.can_vote():
@@ -70,15 +69,16 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
+        messages.error(request, "Please select a choice")
         return render(request,
                       'polls/detail.html',
                       {
                           "question": question,
-                          "error_message": "Please select a choice"
                       },
                       )
     else:
         selected_choice.votes = F("votes") + 1
         selected_choice.save()
+        messages.success(request, "Your vote was recorded")
         return HttpResponseRedirect(
             reverse("polls:results", args=(question.id,)))

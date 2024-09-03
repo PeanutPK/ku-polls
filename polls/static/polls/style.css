@@ -9,13 +9,12 @@ ul {
     margin-inline: auto;
 }
 
-.error_message {
+.display_message {
     text-align: center;
     font-size: large;
     padding: 5px;
     margin: auto;
     list-style: none;
-    background-color: white;
 }
 
 .index_result {
