@@ -65,6 +65,9 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'polls:index'  # after login, show list of polls
+LOGOUT_REDIRECT_URL = 'login'       # after logout, return to login page
+
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 # Database
@@ -93,6 +96,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    # username & password authentication
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # Internationalization

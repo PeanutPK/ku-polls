@@ -78,7 +78,7 @@ h1 {
     color: darkblue;
 }
 
-form {
+.q_vote {
     background-color: antiquewhite;
     padding: 5px;
     border-radius: 5px;

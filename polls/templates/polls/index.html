@@ -2,16 +2,39 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-{% if latest_question_list %}
-<h1>Polls</h1>
-    <!--Handle an error message-->
-    {% if messages %}
-    <div class="display_message">
-    <ul class="messages" style="color: red; text-align: center">
-      {% for msg in messages %}<p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>{% endfor %}
-    </ul>
-    </div>
+<head>
+    {% if latest_question_list %}
+        <h1>Polls</h1>
+        <!--Handle an error message-->
+        {% if messages %}
+            <div class="display_message">
+            <ul class="messages" style="color: red; text-align: center">
+                {% for msg in messages %}
+                <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
+                {% endfor %}
+            </ul>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>No polls are available.</p>
     {% endif %}
+
+    <!--Check for user login-->
+    {% if user.is_authenticated %}
+        <h2>Welcome back, {{ user.username }}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+        </h2>
+    {% else %}
+        <h2>
+        Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+        </h2>
+    {% endif %}
+</head>
+
+<body>
     <!--Show valid question boxes-->
     {% for question in latest_question_list %}
         <div class="question_box">
@@ -24,6 +47,5 @@
         <a href="{% url 'polls:results' question.id %}"><div class="index_result">Results</div></a>
         </div>
     {% endfor %}
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+
+</body>
