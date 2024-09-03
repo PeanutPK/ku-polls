@@ -2,6 +2,7 @@ import datetime
 from django.contrib import admin
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -51,8 +52,19 @@ class Choice(models.Model):
     3. votes to keep track on the number of votes this choice has."""
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    # votes = models.IntegerField(default=0)
+
+    @property
+    def votes(self):
+        """return number of votes this choice has."""
+        return self.vote_set.count()
 
     def __str__(self):
         """Display the text of the choice when print out the object."""
         return self.choice_text
+
+
+class Vote(models.Model):
+    """Vote model for user to vote for a choice in a poll."""
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

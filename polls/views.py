@@ -7,10 +7,11 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
+    """Displays the home page of the site with all the polls."""
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
@@ -25,6 +26,7 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    """Display the choices for a poll and allow voting."""
     model = Question
     template_name = "polls/detail.html"
 
@@ -78,9 +80,19 @@ def vote(request, question_id):
                           "question": question,
                       },
                       )
-    else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
-        messages.success(request, "Your vote was recorded")
-        return HttpResponseRedirect(
-            reverse("polls:results", args=(question.id,)))
+    # USer variable
+    current_user = request.user
+    # Get the user's vote
+    try:
+        # user has a vote for this question
+        vote = current_user.vote_set.get(choice=selected_choice)
+        vote.choice = selected_choice
+        messages.success(request, f"Your vote has updated to {selected_choice.choice_text}")
+        vote.save()
+    except Vote.DoesNotExist:
+        # user dosn't have a vote for this question
+        vote = Vote.objects.create(user=current_user, choice=selected_choice)
+        messages.success(request, f"You have voted for {selected_choice.choice_text}")
+
+    return HttpResponseRedirect(
+        reverse("polls:results", args=(question.id,)))
