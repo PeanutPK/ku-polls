@@ -36,6 +36,12 @@ ul {
     margin-inline: auto;
 }
 
+.results {
+    border: hidden;
+    text-align: left;
+    font-size: large;
+}
+
 .question_box {
     display: inline-block;
     background-color: antiquewhite;
@@ -62,11 +68,6 @@ ul {
     margin: 10px;
 }
 
-.results {
-    display: flex;
-    justify-content: space-between;
-}
-
 h1 {
     background-color: white;
     border-radius: 25px;
@@ -76,6 +77,9 @@ h1 {
     border-width: 5px;
     padding: 20px;
     color: darkblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .q_vote {
