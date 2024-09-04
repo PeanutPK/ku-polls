@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from polls.models import Question, Choice
 from mysite import settings
 
@@ -163,11 +162,6 @@ class UserAuthTest(TestCase):
         and then redirected to the login page.
         """
         logout_url = reverse("logout")
-        # Authenticate the user.
-        # We want to logout this user, so we need to associate the
-        # user user with a session.  Setting client.user = ... doesn't work.
-        # Use Client.login(username, password) to do that.
-        # Client.login returns true on success
         self.assertTrue(
             self.client.login(username=self.username, password=self.password)
         )
