@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 from .models import Question, Choice, Vote
@@ -54,6 +55,12 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
+def logout_view(request, *args, **kwargs):
+    """Logs the user out and redirects to the login page."""
+    logout(request)
+    return redirect("login")
+
+
 @login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -86,12 +93,14 @@ def vote(request, question_id):
         # user has a vote for this question
         vote = Vote.objects.get(user=current_user, choice__question=question)
         vote.choice = selected_choice
-        messages.success(request, f"Your vote has updated to {selected_choice.choice_text}")
+        messages.success(request,
+                         f"Your vote has updated to {selected_choice.choice_text}")
         vote.save()
     except Vote.DoesNotExist:
         # user dosn't have a vote for this question
         vote = Vote.objects.create(user=current_user, choice=selected_choice)
-        messages.success(request, f"You have voted for {selected_choice.choice_text}")
+        messages.success(request,
+                         f"You have voted for {selected_choice.choice_text}")
 
     return HttpResponseRedirect(
         reverse("polls:results", args=(question.id,)))
