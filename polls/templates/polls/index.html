@@ -1,8 +1,7 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-
+<html>
 <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
     {% if latest_question_list %}
     <h1>
         <span style="text-align: right; text-anchor: end">
@@ -36,7 +35,6 @@
         <p>No polls are available.</p>
     {% endif %}
 </head>
-
 <body>
     <!--Show valid question boxes-->
     {% for question in latest_question_list %}
@@ -50,5 +48,5 @@
         <a href="{% url 'polls:results' question.id %}"><div class="index_result">Results</div></a>
         </div>
     {% endfor %}
-
 </body>
+</html>

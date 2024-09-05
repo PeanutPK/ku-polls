@@ -1,4 +1,3 @@
-from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, Http404, redirect
 from django.urls import reverse
@@ -85,7 +84,7 @@ def vote(request, question_id):
     # Get the user's vote
     try:
         # user has a vote for this question
-        vote = current_user.vote_set.get(choice=selected_choice)
+        vote = Vote.objects.get(user=current_user, choice__question=question)
         vote.choice = selected_choice
         messages.success(request, f"Your vote has updated to {selected_choice.choice_text}")
         vote.save()
