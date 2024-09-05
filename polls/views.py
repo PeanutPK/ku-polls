@@ -4,7 +4,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 
 from .models import Question, Choice, Vote
@@ -61,6 +62,28 @@ def logout_view(request, *args, **kwargs):
     return redirect("login")
 
 
+def signup(request):
+    """Register a new user."""
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # get named fields from the form data and password input field
+            # called 'password1'
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect("polls:index")
+        else:
+            messages.error(request, "Not valid form.")
+            return render(request, 'registration/signup.html', {'form': form})
+    else:
+        # Create a form and display
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
 @login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -86,7 +109,7 @@ def vote(request, question_id):
                           "question": question,
                       },
                       )
-    # USer variable
+    # User variable
     current_user = request.user
     # Get the user's vote
     try:
