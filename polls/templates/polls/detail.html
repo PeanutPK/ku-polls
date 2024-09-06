@@ -1,6 +1,10 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<form action="{% url 'polls:vote' question.id %}" method="post">
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+<form action="{% url 'polls:vote' question.id %}" method="post" class="q_vote">
 {% csrf_token %}
 <fieldset>
     <legend><h1>{{ question.question_text }}</h1></legend>
@@ -16,7 +20,8 @@
     {% endif %}
     <!--Form-->
     {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+        {% if user_vote and user_vote.choice.id == choice.id %}checked{% endif %}>
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
 </fieldset>
@@ -25,3 +30,5 @@
 </div>
 <input type="submit" value="Vote">
 </form>
+</body>
+</html>

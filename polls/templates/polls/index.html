@@ -1,17 +1,41 @@
-{% load static %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    {% if latest_question_list %}
+    <h1>
+        <span style="text-align: right; text-anchor: end">
+        Polls
+        </span>
+        <span style="text-align: left">
+        <!--Check for user login-->
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post" style="display: inline">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+            Welcome back, {{ user.username }}
+        {% else %}
+            Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+        {% endif %}
+        </span>
+    </h1>
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-
-{% if latest_question_list %}
-<h1>Polls</h1>
     <!--Handle an error message-->
     {% if messages %}
-    <div class="display_message">
-    <ul class="messages" style="color: red; text-align: center">
-      {% for msg in messages %}<p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>{% endfor %}
-    </ul>
-    </div>
+        <div class="display_message">
+        <ul class="messages" style="color: red; text-align: center">
+            {% for msg in messages %}
+            <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
+            {% endfor %}
+        </ul>
+        </div>
     {% endif %}
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+</head>
+<body>
     <!--Show valid question boxes-->
     {% for question in latest_question_list %}
         <div class="question_box">
@@ -24,6 +48,5 @@
         <a href="{% url 'polls:results' question.id %}"><div class="index_result">Results</div></a>
         </div>
     {% endfor %}
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+</body>
+</html>

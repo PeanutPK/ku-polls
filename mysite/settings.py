@@ -65,6 +65,9 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'polls:index'  # after login, show list of polls
+LOGOUT_REDIRECT_URL = 'login'       # after logout, return to login page
+
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 # Database
@@ -94,6 +97,44 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # username & password authentication
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "level": "DEBUG",
+            "formatter": "verbose",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["file", "console"],
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

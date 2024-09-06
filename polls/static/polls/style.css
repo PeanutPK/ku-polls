@@ -10,6 +10,9 @@ ul {
 }
 
 .display_message {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    max-width: fit-content;
     text-align: center;
     font-size: large;
     padding: 5px;
@@ -34,6 +37,12 @@ ul {
     border-radius: 25px;
     padding: 10px;
     margin-inline: auto;
+}
+
+.results {
+    border: hidden;
+    text-align: left;
+    font-size: large;
 }
 
 .question_box {
@@ -62,11 +71,6 @@ ul {
     margin: 10px;
 }
 
-.results {
-    display: flex;
-    justify-content: space-between;
-}
-
 h1 {
     background-color: white;
     border-radius: 25px;
@@ -76,9 +80,12 @@ h1 {
     border-width: 5px;
     padding: 20px;
     color: darkblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-form {
+.q_vote {
     background-color: antiquewhite;
     padding: 5px;
     border-radius: 5px;

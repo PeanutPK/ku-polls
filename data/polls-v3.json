@@ -1,0 +1,262 @@
+[
+{
+  "model": "polls.question",
+  "pk": 1,
+  "fields": {
+    "question_text": "Which animal is the cutest here?",
+    "pub_date": "2024-08-24T07:56:24Z",
+    "end_date": "2024-09-19T12:47:27Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 3,
+  "fields": {
+    "question_text": "What is your favorite film genre?",
+    "pub_date": "2024-08-29T23:00:00Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 5,
+  "fields": {
+    "question_text": "Future Question",
+    "pub_date": "2100-08-31T13:05:45Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 6,
+  "fields": {
+    "question_text": "Is voting enable for this question?",
+    "pub_date": "2024-08-19T07:13:36Z",
+    "end_date": "2024-08-20T07:14:34Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 1,
+  "fields": {
+    "question": 1,
+    "choice_text": "Pygmy Marmoset"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 2,
+  "fields": {
+    "question": 1,
+    "choice_text": "Capybara"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 3,
+  "fields": {
+    "question": 1,
+    "choice_text": "Red panda"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 4,
+  "fields": {
+    "question": 1,
+    "choice_text": "Chinchilla"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 5,
+  "fields": {
+    "question": 3,
+    "choice_text": "Action"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 3,
+    "choice_text": "Adventure"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 3,
+    "choice_text": "Animated"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 3,
+    "choice_text": "Comedy"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 3,
+    "choice_text": "Drama"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 3,
+    "choice_text": "Fantasy"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 3,
+    "choice_text": "Historical"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 3,
+    "choice_text": "Horror"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 3,
+    "choice_text": "Musical"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 14,
+  "fields": {
+    "question": 3,
+    "choice_text": "Noir"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 15,
+  "fields": {
+    "question": 3,
+    "choice_text": "Romance"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 16,
+  "fields": {
+    "question": 3,
+    "choice_text": "Science fiction"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 17,
+  "fields": {
+    "question": 3,
+    "choice_text": "Thriller"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 18,
+  "fields": {
+    "question": 3,
+    "choice_text": "Western"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 19,
+  "fields": {
+    "question": 5,
+    "choice_text": "Won't work"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 20,
+  "fields": {
+    "question": 5,
+    "choice_text": "Work"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 21,
+  "fields": {
+    "question": 5,
+    "choice_text": "Nah"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 22,
+  "fields": {
+    "question": 6,
+    "choice_text": "Yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 23,
+  "fields": {
+    "question": 6,
+    "choice_text": "No"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 8,
+  "fields": {
+    "choice": 10,
+    "user": 8
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 9,
+  "fields": {
+    "choice": 9,
+    "user": 6
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 10,
+  "fields": {
+    "choice": 1,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 11,
+  "fields": {
+    "choice": 13,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 12,
+  "fields": {
+    "choice": 3,
+    "user": 9
+  }
+}
+]
