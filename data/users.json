@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$870000$ZRTBCl3hxTxg8tceR6bdDH$VykCnb0sC5YPSaAzRTSAi8e6wpOV7dJ9hiSljj5pf7k=",
-    "last_login": "2024-08-30T16:43:11.526Z",
+    "last_login": "2024-09-06T15:14:42.325Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -37,18 +37,72 @@
 },
 {
   "model": "auth.user",
-  "pk": 3,
+  "pk": 6,
   "fields": {
-    "password": "pbkdf2_sha256$870000$MduYLBtVHBcOFF9Bi2ujQP$5yqw3ziWqO9geNQalfc4iDaNWqrlCi7YIzwuVQMgscU=",
-    "last_login": "2024-09-05T02:26:45.057Z",
+    "password": "pbkdf2_sha256$870000$84jhtWfoizDkOx9d3FpcsB$OWJ2ZPfg5l/2720/uM9+lun69u8CxWKE/MYeONMo8SE=",
+    "last_login": "2024-09-06T07:29:46.366Z",
+    "is_superuser": false,
+    "username": "demo3",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-09-05T16:24:06.271Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$59zT41Bt629V6pmFkd2ozB$pNCEaXMktdBiWFh3mIsLv6ujxdP/cs+G4mcNT8ejPqY=",
+    "last_login": "2024-09-05T16:47:47.632Z",
+    "is_superuser": false,
+    "username": "demo1",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-09-05T16:47:47.366Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$VaVzujE7K0uHUqjabCTbeh$fa/8vLaJp8iXHYL2/EBa6cvLJakI/9fRss1qF/BD/6Y=",
+    "last_login": "2024-09-05T16:49:02.312Z",
+    "is_superuser": false,
+    "username": "demo2",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-09-05T16:49:02.047Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$OXQ9xou4gZ7qtb3GXKVKAm$ASvzv0OkwMc8cEKCvmb/l0ttY/Ar7dPC1xHeqzDcI1U=",
+    "last_login": "2024-09-06T15:29:31.260Z",
     "is_superuser": false,
     "username": "Sally",
-    "first_name": "Sally",
-    "last_name": "Really",
+    "first_name": "",
+    "last_name": "",
     "email": "sally@real.random",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2024-09-03T07:59:32.554Z",
+    "date_joined": "2024-09-06T15:24:48.562Z",
     "groups": [],
     "user_permissions": []
   }

@@ -221,34 +221,42 @@
 },
 {
   "model": "polls.vote",
-  "pk": 1,
+  "pk": 8,
   "fields": {
-    "choice": 18,
-    "user": 3
+    "choice": 10,
+    "user": 8
   }
 },
 {
   "model": "polls.vote",
-  "pk": 2,
+  "pk": 9,
+  "fields": {
+    "choice": 9,
+    "user": 6
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 10,
+  "fields": {
+    "choice": 1,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 11,
   "fields": {
     "choice": 13,
-    "user": 3
+    "user": 9
   }
 },
 {
   "model": "polls.vote",
-  "pk": 3,
+  "pk": 12,
   "fields": {
-    "choice": 11,
-    "user": 3
-  }
-},
-{
-  "model": "polls.vote",
-  "pk": 4,
-  "fields": {
-    "choice": 15,
-    "user": 3
+    "choice": 3,
+    "user": 9
   }
 }
 ]
