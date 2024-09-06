@@ -3,12 +3,19 @@ from django.shortcuts import render, get_object_or_404, Http404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 
-from .models import Question, Choice, Vote
+from polls.models import Question, Choice, Vote
+
+from django.dispatch import receiver
+from django.contrib.auth.signals import user_logged_in, user_login_failed
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -74,34 +81,6 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
-def logout_view(request, *args, **kwargs):
-    """Logs the user out and redirects to the login page."""
-    logout(request)
-    return redirect("login")
-
-
-def signup(request):
-    """Register a new user."""
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # get named fields from the form data and password input field
-            # called 'password1'
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect("polls:index")
-        else:
-            messages.error(request, "Not valid form.")
-            return render(request, 'registration/signup.html', {'form': form})
-    else:
-        # Create a form and display
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
-
-
 @login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -135,13 +114,70 @@ def vote(request, question_id):
         vote = Vote.objects.get(user=current_user, choice__question=question)
         vote.choice = selected_choice
         messages.success(request,
-                         f"Your vote has updated to {selected_choice.choice_text}")
+                         f"Your vote has updated to "
+                         f"{selected_choice.choice_text}")
         vote.save()
     except Vote.DoesNotExist:
-        # user dosn't have a vote for this question
+        # user doesn't have a vote for this question
         Vote.objects.create(user=current_user, choice=selected_choice)
         messages.success(request,
                          f"You have voted for {selected_choice.choice_text}")
-
+    logger.info(f"{current_user.username} votes for "
+                f"{selected_choice.choice_text} at question {question.id}")
     return HttpResponseRedirect(
         reverse("polls:results", args=(question.id,)))
+
+
+def signup(request):
+    """Register a new user."""
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # get named fields from the form data and password input field
+            # called 'password1'
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect("polls:index")
+        else:
+            messages.error(request, "Not valid form.")
+            return render(request, 'registration/signup.html', {'form': form})
+    else:
+        # Create a form and display
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+@login_required
+def logout_view(request, *args, **kwargs):
+    """Logs the user out and redirects to the login page."""
+    ip_address = get_client_ip(request)
+    logout(request)
+    logger.info(f"Logged out from {ip_address}")
+    return redirect("login")
+
+
+@receiver(user_logged_in)
+def user_logged_in_callback(sender, request, user, **kwargs):
+    """Logs for the user login success."""
+    ip_address = get_client_ip(request)
+    logger.info(f'Login user: {user} via ip: {ip_address}')
+
+
+@receiver(user_login_failed)
+def user_login_failed_callback(sender, credentials, request, **kwargs):
+    """Logs the user login failed."""
+    ip_address = get_client_ip(request)
+    logger.warning(f'login failed: {ip_address}')
