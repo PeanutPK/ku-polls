@@ -25,15 +25,16 @@
         </tr>
         {% endfor %}
     </table>
-    <!--message-->
-    {% if messages %}
-    <div class="display_message">
-        <ul class="messages" style="color: green; text-align: center">
-            {% for msg in messages %}<p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>{% endfor %}
-        </ul>
-    </div>
-    {% endif %}
 </div>
+<!--message-->
+{% if messages %}
+<div class="display_message">
+    <p class="messages">
+        {% for msg in messages %}<p class="{{msg.tags}}" style="color: green; text-align: center"><strong>{{ msg }}</strong></p>{% endfor %}
+    </p>
+</div>
+{% endif %}
+
 <div>
     <a href="{% url 'polls:index' %}" class="option">Home</a>
 </div>
