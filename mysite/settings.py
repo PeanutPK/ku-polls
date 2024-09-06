@@ -113,14 +113,14 @@ LOGGING = {
             "level": "DEBUG",
             "formatter": "verbose",
         },
+        "console": {
+            "class": "logging.StreamHandler",
+        }
     },
     "loggers": {
         "": {
             "level": "DEBUG",
-            "handlers": ["file"],
-            "my_app.views": {...},
-            "my_app": {...},
-            "my_app.views.private": { "propagate": False, },
+            "handlers": ["file", "console"],
         },
     },
     "formatters": {
