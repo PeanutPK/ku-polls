@@ -23,7 +23,7 @@ class IndexView(generic.ListView):
         Q is for making that query optional.
         """
         return Question.objects.filter(pub_date__lte=timezone.now()
-                                       ).order_by("-pub_date")[:5]
+                                       ).order_by("-pub_date")
 
 
 class DetailView(generic.DetailView):
@@ -36,6 +36,24 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get_context_data(self, *args, **kwargs):
+        """
+        If user vote then show the vote to user in a message and radio checked.
+        """
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        question = self.get_object()
+        try:
+            user_vote = Vote.objects.get(user=current_user,
+                                         choice__question=question.id)
+            messages.add_message(self.request, messages.INFO,
+                                 f"Previously {user_vote}")
+        except (KeyError, Vote.DoesNotExist):
+            user_vote = None
+        context["question"] = question
+        context["user_vote"] = user_vote
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         """
@@ -121,7 +139,7 @@ def vote(request, question_id):
         vote.save()
     except Vote.DoesNotExist:
         # user dosn't have a vote for this question
-        vote = Vote.objects.create(user=current_user, choice=selected_choice)
+        Vote.objects.create(user=current_user, choice=selected_choice)
         messages.success(request,
                          f"You have voted for {selected_choice.choice_text}")
 

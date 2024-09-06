@@ -20,7 +20,8 @@
     {% endif %}
     <!--Form-->
     {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+        {% if user_vote and user_vote.choice.id == choice.id %}checked{% endif %}>
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
 </fieldset>
