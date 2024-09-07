@@ -51,16 +51,20 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
         question = self.get_object()
-        try:
-            user_vote = Vote.objects.get(user=current_user,
-                                         choice__question=question.id)
-            messages.add_message(self.request, messages.INFO,
-                                 f"Previously {user_vote}")
-        except (KeyError, Vote.DoesNotExist):
-            user_vote = None
         context["question"] = question
-        context["user_vote"] = user_vote
-        return context
+        if current_user.is_authenticated:
+            try:
+                user_vote = Vote.objects.get(user=current_user,
+                                             choice__question=question.id)
+                messages.add_message(self.request, messages.INFO,
+                                     f"Previously {user_vote}")
+            except (KeyError, Vote.DoesNotExist):
+                user_vote = None
+            context["user_vote"] = user_vote
+            return context
+        else:
+            context["user_vote"] = None
+            return context
 
     def dispatch(self, request, *args, **kwargs):
         """
