@@ -53,6 +53,7 @@ ul {
     margin: 10px;
     width: 20%;
     height: 30%;
+    box-shadow: 10px 10px black;
 }
 
 .question_text {
