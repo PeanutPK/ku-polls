@@ -21,21 +21,6 @@ class QuestionIndexViewTests(TestCase):
     """
     Tests for index view showing question correctly.
     """
-    def setUp(self):
-        """
-        superclass setUp creates a Client object
-        for cases that requires login
-        """
-        super().setUp()
-        self.username = "testuser"
-        self.password = "FatChance!"
-        self.user1 = User.objects.create_user(
-            username=self.username,
-            password=self.password,
-            email="testuser@nowhere.com"
-        )
-        self.user1.first_name = "Tester"
-        self.user1.save()
 
     def test_no_questions(self):
         """
@@ -63,7 +48,6 @@ class QuestionIndexViewTests(TestCase):
         The detail view of a question with a pub_date in the past
         displays the question's text.
         """
-        self.client.login(username=self.username, password=self.password)
         past_question = create_question(question_text="Past Question.",
                                         days=-5)
         url = reverse("polls:detail", args=(past_question.id,))
