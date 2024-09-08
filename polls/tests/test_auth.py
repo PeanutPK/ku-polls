@@ -40,8 +40,10 @@ class UserAuthTest(TestCase):
         q = Question.objects.create(question_text="First Poll Question")
         q.save()
         # a few choices
+        self.choice = []
         for n in range(1, 4):
             choice = Choice(choice_text=f"Choice {n}", question=q)
+            self.choice.append(choice)
             choice.save()
         self.question = q
 
@@ -100,3 +102,26 @@ class UserAuthTest(TestCase):
         self.assertEqual(response.status_code, 302)  # could be 303
         login_with_next = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_with_next)
+
+    def test_one_user_one_vote(self):
+        """One user have one vote."""
+        vote_url = reverse('polls:vote', args=[self.question.id])
+        self.client.login(username=self.username, password=self.password)
+
+        # get three of four choices from the choice list created in setUp
+        choice1 = self.choice[0]
+        choice2 = self.choice[1]
+        choice3 = self.choice[2]
+        # vote choice 1
+        self.client.post(vote_url, {"choice": choice1.id})
+
+        self.assertEqual(choice1.vote_set.count(), 1)
+        self.assertEqual(choice2.vote_set.count(), 0)
+        self.assertEqual(choice3.vote_set.count(), 0)
+
+        # vote choice 2
+        self.client.post(vote_url, {"choice": choice2.id})
+
+        self.assertEqual(choice1.vote_set.count(), 0)
+        self.assertEqual(choice2.vote_set.count(), 1)
+        self.assertEqual(choice3.vote_set.count(), 0)

@@ -72,7 +72,10 @@ class DetailView(generic.DetailView):
         then it will redirect to index page with response 302.
         """
         try:
-            self.object = self.get_object()
+            q_object = self.get_object()
+            if not q_object.is_published():
+                messages.error(request, "This question is not yet published.")
+                return HttpResponseRedirect(reverse('polls:index'))
             return super().dispatch(request, *args, **kwargs)
         except Http404:
             # Temporary redirect to another page if the object is not found
