@@ -30,6 +30,13 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
     python manage.py runserver
     ```
 
+## Demo users
+| **list** | **Username** | **Password** |
+|----------|--------------|--------------|
+| 1        | demo1        | hackme11     |
+| 2        | demo2        | hackme22     |
+| 3        | demo3        | hackme33     |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
