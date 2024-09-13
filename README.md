@@ -25,6 +25,10 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
     ```commandline
     python manage.py loaddata data/<filename>
     ```
+   For example, in V1.0.0 use this commandline
+   ```commandline
+   python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
+   ```
 4. Run django server
     ```commandline
     python manage.py runserver
