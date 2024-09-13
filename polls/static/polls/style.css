@@ -21,6 +21,9 @@ ul {
 }
 
 .index_result {
+    text-decoration: none;
+    color: purple;
+    font-weight: bold;
     display: flex;
     background-color: white;
     max-width: fit-content;
@@ -56,20 +59,17 @@ ul {
     box-shadow: 10px 10px black;
 }
 
+.question_box:hover {
+    background-color: salmon;
+}
+
 .question_text {
+    text-decoration: none;
+    font-weight: bold;
     font-size: x-large;
     height: 80%;
     width: auto;
     display: block;
-}
-
-.option {
-    display: inline-block;
-    max-width: fit-content;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
 }
 
 h1 {
@@ -92,8 +92,27 @@ h1 {
     border-radius: 5px;
 }
 
+.button {
+    text-decoration: none;
+    color: purple;
+    font-weight: bold;
+    display: inline-block;
+    background-color: white;
+    max-width: fit-content;
+    border-style: solid;
+    border-color: salmon;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.button_text {
+    color: purple;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 body {
-    background: white url("images/background.jpg") no-repeat;
+    background: darkorange url("images/background.jpg") no-repeat;
     background-size: cover;
     font-family: sans-serif;
 }

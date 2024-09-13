@@ -3,50 +3,59 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
     {% if latest_question_list %}
-    <h1>
-        <span style="text-align: right; text-anchor: end">
-        Polls
-        </span>
-        <span style="text-align: left">
-        <!--Check for user login-->
-        {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post" style="display: inline">
-                {% csrf_token %}
-                <button type="submit">Log Out</button>
-            </form>
-            Welcome back, {{ user.username }}
-        {% else %}
-            Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+        <h1>
+            <span style="text-align: right; text-anchor: end">
+            Polls
+            </span>
+            <span style="text-align: left">
+            <!--Check for user login-->
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post"
+                      style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="button">Log Out</button>
+                </form>
+                Welcome back, {{ user.username }}
+            {% else %}
+                Please <a href="{% url 'login' %}?next={{request.path}}"
+                          style="text-decoration: none;
+                          color: green;">Login</a>
+            {% endif %}
+            </span>
+        </h1>
+        <!--Handle an error message-->
+        {% if messages %}
+            <div class="display_message">
+                <ul class="messages" style="color: red; text-align: center">
+                    {% for msg in messages %}
+                    <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
-        </span>
-    </h1>
-
-    <!--Handle an error message-->
-    {% if messages %}
-        <div class="display_message">
-        <ul class="messages" style="color: red; text-align: center">
-            {% for msg in messages %}
-            <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
-            {% endfor %}
-        </ul>
-        </div>
-    {% endif %}
     {% else %}
         <p>No polls are available.</p>
     {% endif %}
 </head>
 <body>
-    <!--Show valid question boxes-->
-    {% for question in latest_question_list %}
-        <div class="question_box">
-        <!--Called value of url name detail in polls/urls.py-->
-        {% if question.can_vote %}
-            <a href="{% url 'polls:detail' question.id %}" class="question_text">{{ question.question_text }}</a>
-        {% elif question.is_published %}
-            <a href="{% url 'polls:results' question.id %}" class="question_text">{{ question.question_text }}</a>
-        {% endif %}
-        <a href="{% url 'polls:results' question.id %}"><div class="index_result">Results</div></a>
-        </div>
-    {% endfor %}
+    <div class="center" style="background: none">
+        <!--Show valid question boxes-->
+        {% for question in latest_question_list %}
+            <div class="question_box">
+                <!--Called value of url name detail in polls/urls.py-->
+                {% if question.can_vote %}
+                    <a href="{% url 'polls:detail' question.id %}"
+                       class="question_text"
+                       style="color: green">{{ question.question_text }}</a>
+                {% elif question.is_published %}
+                    <a href="{% url 'polls:results' question.id %}"
+                       class="question_text"
+                       style="color: red">{{ question.question_text }}</a>
+                {% endif %}
+                    <a href="{% url 'polls:results' question.id %}"
+                       class="index_result">Results</a>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
