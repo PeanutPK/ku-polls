@@ -9,55 +9,37 @@ additional features.
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
 
-## Requirements
-
-1. Python 3.11 or newer
-2. Django 5.1 or newer
-
-## Installation
-
-1. Open Terminal for macOS/Linux or Windows PowerShell/Command prompt for Windows
-2. Clone this repository
-```commandline
-git clone <repository link>
-```
-3. Change directory to ku-polls
-```commandline
-cd ku-polls
-```
-4. Create a Python environment using this command line
-```commandline
-python -m venv env
-```
-5. Activate virtual environment
-
-  - For macOS/Linux
-```commandline
-source env/bin/activate
-```
-  - For Windows
-```commandline
-env\Scripts\activate
-```
-6. Install required packages
-```commandline
-pip install -r requirements.txt
-```
-7. Initialize Database
-```commandline
-python manage.py migrate
-```
-
 ## Running the Application
 
-1. Load poll data from a file
-```commandline
-python manage.py loaddata data/<filename>
-```
-2. Run django server
-```commandline
-python manage.py runserver
-```
+1. Before running the application make sure to [install](INSTALLATION.md) all requirements.
+2. Activate virtual environment
+   - For macOS/Linux
+    ```commandline
+    source env/bin/activate
+    ```
+   - For Windows
+    ```commandline
+    env\Scripts\activate
+    ```
+3. Load poll data from a file
+    ```commandline
+    python manage.py loaddata data/<filename>
+    ```
+   For example, in V1.0.0 use this commandline
+   ```commandline
+   python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
+   ```
+4. Run django server
+    ```commandline
+    python manage.py runserver
+    ```
+
+## Demo users
+| **list** | **Username** | **Password** |
+|----------|--------------|--------------|
+| 1        | demo1        | hackme11     |
+| 2        | demo2        | hackme22     |
+| 3        | demo3        | hackme33     |
 
 ## Project Documents
 

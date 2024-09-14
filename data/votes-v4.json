@@ -1,0 +1,50 @@
+[
+{
+  "model": "polls.vote",
+  "pk": 8,
+  "fields": {
+    "choice": 10,
+    "user": 8
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 9,
+  "fields": {
+    "choice": 9,
+    "user": 6
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 10,
+  "fields": {
+    "choice": 1,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 11,
+  "fields": {
+    "choice": 7,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 12,
+  "fields": {
+    "choice": 3,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 13,
+  "fields": {
+    "choice": 42,
+    "user": 9
+  }
+}
+]

@@ -1,3 +1,4 @@
+"""Views for django MVT models."""
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, Http404, redirect
 from django.urls import reverse
@@ -20,32 +21,30 @@ logger = logging.getLogger(__name__)
 
 class IndexView(generic.ListView):
     """Displays the home page of the site with all the polls."""
+
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
-        """
-        Returns the last five published questions.
-        (not including those set to be in the future)
-        Q is for making that query optional.
-        """
+        """Return all published questions queryset."""
         return Question.objects.filter(pub_date__lte=timezone.now()
                                        ).order_by("-pub_date")
 
 
 class DetailView(generic.DetailView):
     """Display the choices for a poll and allow voting."""
+
     model = Question
     template_name = "polls/detail.html"
 
     def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
+        """Excludes any questions that aren't published yet."""
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get_context_data(self, *args, **kwargs):
         """
+        Return the context data for the view.
+
         If user vote then show the vote to user in a message and radio checked.
         """
         context = super().get_context_data(**kwargs)
@@ -68,8 +67,10 @@ class DetailView(generic.DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         """
-        Try to get a question object, except error 404;
-        then it will redirect to index page with response 302.
+        Return dispatch result if the website exists or not.
+
+        Try to get a question object, except error 404.
+        Then it will redirect to index page with response 302.
         """
         try:
             q_object = self.get_object()
@@ -84,12 +85,19 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """Display a result page for user to see current votes."""
+
     model = Question
     template_name = "polls/results.html"
 
 
 @login_required
 def vote(request, question_id):
+    """
+    Return the vote for a particular question.
+
+    Check for published question and redirect to result page after voting.
+    """
     question = get_object_or_404(Question, pk=question_id)
 
     if not question.is_published():
@@ -118,12 +126,13 @@ def vote(request, question_id):
     # Get the user's vote
     try:
         # user has a vote for this question
-        vote = Vote.objects.get(user=current_user, choice__question=question)
-        vote.choice = selected_choice
+        user_vote = Vote.objects.get(user=current_user,
+                                     choice__question=question)
+        user_vote.choice = selected_choice
         messages.success(request,
                          f"Your vote has updated to "
                          f"{selected_choice.choice_text}")
-        vote.save()
+        user_vote.save()
     except Vote.DoesNotExist:
         # user doesn't have a vote for this question
         Vote.objects.create(user=current_user, choice=selected_choice)
@@ -169,7 +178,7 @@ def get_client_ip(request):
 
 @login_required
 def logout_view(request, *args, **kwargs):
-    """Logs the user out and redirects to the login page."""
+    """Return a shortcut to redirect user to login page after logout."""
     ip_address = get_client_ip(request)
     logout(request)
     logger.info(f"Logged out from {ip_address}")
@@ -178,13 +187,13 @@ def logout_view(request, *args, **kwargs):
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
-    """Logs for the user login success."""
+    """Show logs for the user login success."""
     ip_address = get_client_ip(request)
     logger.info(f'Login user: {user} via ip: {ip_address}')
 
 
 @receiver(user_login_failed)
 def user_login_failed_callback(sender, credentials, request, **kwargs):
-    """Logs the user login failed."""
+    """Show logs the user login failed."""
     ip_address = get_client_ip(request)
     logger.warning(f'login failed: {ip_address}')
