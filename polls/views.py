@@ -76,8 +76,13 @@ class DetailView(generic.DetailView):
             q_object = self.get_object()
             if not q_object.is_published():
                 messages.error(request, "This question is not yet published.")
-                return HttpResponseRedirect(reverse('polls:index'))
-            return super().dispatch(request, *args, **kwargs)
+                return redirect(reverse('polls:index'))
+            elif not q_object.can_vote():
+                messages.error(request, "Voting is not allowed "
+                                        "for this question.")
+                return redirect(reverse('polls:index'))
+            else:
+                return super().dispatch(request, *args, **kwargs)
         except Http404:
             # Temporary redirect to another page if the object is not found
             messages.error(request, f"Question {kwargs['pk']} does not exist.")
