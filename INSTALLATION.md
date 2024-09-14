@@ -45,7 +45,11 @@
    pip install -r requirements.txt
    ```
 
-7. Initialize Database
+7. Test
+   ```commandline
+   python manage.py test
+   ```
+9. Initialize Database
 
    ```commandline
    python manage.py migrate
