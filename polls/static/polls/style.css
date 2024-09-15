@@ -20,19 +20,6 @@ ul {
     list-style: none;
 }
 
-.index_result {
-    text-decoration: none;
-    color: purple;
-    font-weight: bold;
-    display: flex;
-    background-color: white;
-    max-width: fit-content;
-    border-style: solid;
-    border-color: salmon;
-    border-radius: 5px;
-    padding: 10px;
-}
-
 .center {
     text-align: center;
     background-color: antiquewhite;
@@ -103,6 +90,10 @@ h1 {
     border-color: salmon;
     border-radius: 5px;
     padding: 10px;
+}
+
+.button:active {
+    background-color: darkgray;
 }
 
 .button_text {
