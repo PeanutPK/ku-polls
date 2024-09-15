@@ -1,3 +1,4 @@
+"""Test for availability to vote for each type of question."""
 import datetime
 
 from django.test import TestCase
@@ -8,6 +9,8 @@ from polls.models import Question
 
 def create_question(question_text, days):
     """
+    Return a Question object with given text and publication date.
+
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
@@ -17,14 +20,10 @@ def create_question(question_text, days):
 
 
 class QuestionVotingTests(TestCase):
-    """
-    Voting availability test.
-    """
+    """Voting availability test."""
 
     def test_cannot_vote_future_polls(self):
-        """
-        Can't vote for future polls, and the polls shouldn't be shown.
-        """
+        """Can't vote for future polls, and the polls shouldn't be shown."""
         question1 = create_question(question_text="Future question1.", days=5)
         question2 = create_question(question_text="Future question2.", days=1)
         response = self.client.get(reverse("polls:index"))
@@ -33,9 +32,7 @@ class QuestionVotingTests(TestCase):
         self.assertContains(response, "No polls are available.")
 
     def test_cannot_vote_ended_polls(self):
-        """
-        Can't vote for polls that already ends.
-        """
+        """Can't vote for polls that already ends."""
         question = create_question(question_text="Ended question.", days=-1)
         question.end_date = timezone.now() + datetime.timedelta(days=-1)
         response = self.client.get(reverse("polls:index"))
@@ -44,9 +41,7 @@ class QuestionVotingTests(TestCase):
         self.assertFalse(question.can_vote())
 
     def test_can_vote_question(self):
-        """
-        Can vote for currently active questions.
-        """
+        """Can vote for currently active questions."""
         question = create_question(question_text="Ended question.", days=-1)
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(response.context["latest_question_list"],
