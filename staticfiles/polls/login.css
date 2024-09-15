@@ -1,0 +1,36 @@
+body {
+    background: white url("images/background.jpg") no-repeat;
+    background-size: cover;
+    font-family: sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    margin: 0; /* Remove default body margin */
+}
+
+.login_box {
+    background-color: antiquewhite;
+    border-radius: 25px;
+    height: 15pc;
+    padding: 10px;
+    text-align: center;
+    max-width: fit-content;
+    box-shadow: 10px 10px black;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
+
+.button {
+    background-color: navajowhite; /* Green */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

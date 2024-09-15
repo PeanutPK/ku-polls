@@ -1,0 +1,109 @@
+li a {
+    color: green;
+    font-size: large;
+    padding: 10px;
+}
+
+ul {
+    max-width: fit-content;
+    margin-inline: auto;
+}
+
+.display_message {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    max-width: fit-content;
+    text-align: center;
+    font-size: large;
+    padding: 5px;
+    margin: auto;
+    list-style: none;
+}
+
+.center {
+    text-align: center;
+    background-color: antiquewhite;
+    max-width: fit-content;
+    border-radius: 25px;
+    padding: 10px;
+    margin-inline: auto;
+}
+
+.results {
+    border: hidden;
+    text-align: left;
+    font-size: large;
+}
+
+.question_box {
+    display: inline-block;
+    background-color: antiquewhite;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
+    width: 20%;
+    height: 30%;
+    box-shadow: 10px 10px black;
+}
+
+.question_box:hover {
+    background-color: salmon;
+}
+
+.question_text {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: x-large;
+    height: 80%;
+    width: auto;
+    display: block;
+}
+
+h1 {
+    background-color: white;
+    border-radius: 25px;
+    margin: 10px;
+    border-style: double;
+    border-color: gray;
+    border-width: 5px;
+    padding: 20px;
+    color: darkblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.q_vote {
+    background-color: antiquewhite;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.button {
+    text-decoration: none;
+    color: purple;
+    font-weight: bold;
+    display: inline-block;
+    background-color: white;
+    max-width: fit-content;
+    border-style: solid;
+    border-color: salmon;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.button:active {
+    background-color: darkgray;
+}
+
+.button_text {
+    color: purple;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+body {
+    background: darkorange url("images/background.jpg") no-repeat;
+    background-size: cover;
+    font-family: sans-serif;
+}
