@@ -30,13 +30,18 @@
 {% if messages %}
 <div class="display_message">
     <p class="messages">
-        {% for msg in messages %}<p class="{{msg.tags}}" style="color: green; text-align: center"><strong>{{ msg }}</strong></p>{% endfor %}
+        {% for msg in messages %}
+        <p class="{{msg.tags}}" style="color: green; text-align: center">
+            <strong>{{ msg }}</strong>
+        </p>
+        {% endfor %}
     </p>
 </div>
 {% endif %}
-
-<button class="button">
-    <a href="{% url 'polls:index' %}" class="button_text">Home</a>
-</button>
+<a href="{% url 'polls:index' %}" class="button_text">
+    <button type="button" class="button">
+        Home
+    </button>
+</a>
 </body>
 </html>

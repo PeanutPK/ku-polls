@@ -11,11 +11,13 @@
         <!--Handle an error message-->
         {% if messages %}
         <div class="display_message">
-            <ul class="messages" style="color: red; text-align: center">
+            <p class="messages">
                 {% for msg in messages %}
-                <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
+                <p class="{{msg.tags}}" style="color: red; text-align: center">
+                    <strong>{{ msg }}</strong>
+                </p>
                 {% endfor %}
-            </ul>
+            </p>
         </div>
         {% endif %}
         <!--Form-->
@@ -27,9 +29,16 @@
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote" class="button">
-    <button class="button">
-        <a href="{% url 'polls:index' %}" class="button_text">Go back to voting list</a>
-    </button>
+    <a href="{% url 'polls:results' question.id %}" class="button_text">
+        <button type="button" class="button">
+            Results
+        </button>
+    </a>
+    <a href="{% url 'polls:index' %}" class="button_text">
+        <button type="button" class="button">
+            Go back to voting list
+        </button>
+    </a>
 </form>
 </body>
 </html>

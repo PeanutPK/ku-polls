@@ -3,36 +3,38 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
     {% if latest_question_list %}
-        <h1>
-            <span style="text-align: right; text-anchor: end">
-            Polls
-            </span>
-            <span style="text-align: left">
-            <!--Check for user login-->
-            {% if user.is_authenticated %}
-                <form action="{% url 'logout' %}" method="post"
-                      style="display: inline">
-                    {% csrf_token %}
-                    <button type="submit" class="button">Log Out</button>
-                </form>
-                Welcome back, {{ user.username }}
-            {% else %}
-                Please <a href="{% url 'login' %}?next={{request.path}}"
-                          style="text-decoration: none;
-                          color: green;">Login</a>
-            {% endif %}
-            </span>
-        </h1>
-        <!--Handle an error message-->
-        {% if messages %}
-            <div class="display_message">
-                <ul class="messages" style="color: red; text-align: center">
-                    {% for msg in messages %}
-                    <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
-                    {% endfor %}
-                </ul>
-            </div>
+    <h1>
+        <span style="text-align: right; text-anchor: end">
+        Polls
+        </span>
+        <span style="text-align: left">
+        <!--Check for user login-->
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post"
+                  style="display: inline">
+                {% csrf_token %}
+                <button type="submit" class="button">Log Out</button>
+            </form>
+            Welcome back, {{ user.username }}
+        {% else %}
+            Please <a href="{% url 'login' %}?next={{request.path}}"
+                      style="text-decoration: none;
+                      color: green;">Login</a>
         {% endif %}
+        </span>
+    </h1>
+    <!--Handle an error message-->
+    {% if messages %}
+        <div class="display_message">
+            <p class="messages">
+                {% for msg in messages %}
+                <p class="{{msg.tags}}" style="color: red; text-align: center">
+                    <strong>{{ msg }}</strong>
+                </p>
+                {% endfor %}
+            </p>
+        </div>
+    {% endif %}
     {% else %}
         <p>No polls are available.</p>
     {% endif %}
@@ -53,7 +55,11 @@
                        style="color: red">{{ question.question_text }}</a>
                 {% endif %}
                     <a href="{% url 'polls:results' question.id %}"
-                       class="index_result">Results</a>
+                       class="button_text">
+                        <button class="button">
+                            Results
+                        </button>
+                    </a>
             </div>
         {% endfor %}
     </div>
