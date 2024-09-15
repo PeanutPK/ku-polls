@@ -35,6 +35,12 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
     python manage.py runserver
     ```
 
+## Demo superuser
+| **list** | **Username** | **Password**        |
+|----------|--------------|---------------------|
+| 1        | admin        | MyStrongPassword123 |
+
+
 ## Demo users
 | **list** | **Username** | **Password** |
 |----------|--------------|--------------|
