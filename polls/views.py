@@ -92,6 +92,29 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     """Display a result page for user to see current votes."""
 
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Return dispatch result if the website exists or not.
+
+        Try to get a question object, except error 404.
+        Then it will redirect to index page with response 302.
+        """
+        try:
+            q_object = self.get_object()
+            if not q_object.is_published():
+                messages.error(request, "This question is not yet published.")
+                return redirect(reverse('polls:index'))
+            elif not q_object.can_vote():
+                messages.error(request, "Voting is not allowed "
+                                        "for this question.")
+                return redirect(reverse('polls:index'))
+            else:
+                return super().dispatch(request, *args, **kwargs)
+        except Http404:
+            # Temporary redirect to another page if the object is not found
+            messages.error(request, f"Question {kwargs['pk']} does not exist.")
+            return redirect(reverse('polls:index'))
+
     model = Question
     template_name = "polls/results.html"
 
@@ -104,17 +127,6 @@ def vote(request, question_id):
     Check for published question and redirect to result page after voting.
     """
     question = get_object_or_404(Question, pk=question_id)
-
-    if not question.is_published():
-        messages.error(request, "This question has not published yet.")
-        return render(request, 'polls/detail.html',
-                      {
-                          "question": question,
-                      }, )
-
-    if not question.can_vote():
-        messages.error(request, "Voting is not allowed for this question.")
-        return HttpResponseRedirect(reverse('polls:index'))
 
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -145,6 +157,34 @@ def vote(request, question_id):
                          f"You have voted for {selected_choice.choice_text}")
     logger.info(f"{current_user.username} votes for "
                 f"{selected_choice.choice_text} at question {question.id}")
+    return HttpResponseRedirect(
+        reverse("polls:results", args=(question.id,)))
+
+
+@login_required
+def reset_vote(request, question_id):
+    """
+    Reset user's vote for a particular question.
+
+    Check for published question
+    and redirect to result page after reset voting.
+    """
+    question = get_object_or_404(Question, pk=question_id)
+
+    # User variable
+    current_user = request.user
+    # Get the user's vote
+    try:
+        # user has a vote for this question
+        user_vote = Vote.objects.get(user=current_user,
+                                     choice__question=question)
+        user_vote.delete()
+        messages.success(request, "You have reset your vote")
+    except Vote.DoesNotExist:
+        # user doesn't have a vote for this question
+        messages.success(request, "No vote reset required")
+    logger.info(f"{current_user.username} reset votes "
+                f"for question {question.id}")
     return HttpResponseRedirect(
         reverse("polls:results", args=(question.id,)))
 
