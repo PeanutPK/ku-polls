@@ -7,6 +7,7 @@
 
 1. Open Terminal for macOS/Linux or Windows PowerShell/Command prompt for
    Windows
+
 2. Clone this repository
 
    ```commandline
@@ -45,14 +46,21 @@
    pip install -r requirements.txt
    ```
 
-7. Test
-   ```commandline
-   python manage.py test
-   ```
-9. Initialize Database
+7. Setting up environment
+   
+   Create `.env` file
+   and use [sample.env](sample.env) for an example for setting up.
+
+8. Initialize Database
 
    ```commandline
    python manage.py migrate
+   ```
+
+9. Test
+
+   ```commandline
+   python manage.py test
    ```
 
 After you did install all of the above go back to [README.md](README.md).
