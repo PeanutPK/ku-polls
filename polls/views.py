@@ -104,10 +104,6 @@ class ResultsView(generic.DetailView):
             if not q_object.is_published():
                 messages.error(request, "This question is not yet published.")
                 return redirect(reverse('polls:index'))
-            elif not q_object.can_vote():
-                messages.error(request, "Voting is not allowed "
-                                        "for this question.")
-                return redirect(reverse('polls:index'))
             else:
                 return super().dispatch(request, *args, **kwargs)
         except Http404:
