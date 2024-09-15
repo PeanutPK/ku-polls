@@ -1,3 +1,4 @@
+"""Tests for user authentication."""
 import datetime
 
 from django.test import TestCase
@@ -10,6 +11,8 @@ from mysite import settings
 
 def create_question(question_text, days):
     """
+    Return a Question object with given text and publication date.
+
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
@@ -19,13 +22,15 @@ def create_question(question_text, days):
 
 
 class UserAuthTest(TestCase):
-    """
-    Test for cases that require authentication.
-    """
+    """Test for cases that require authentication."""
 
     def setUp(self):
-        """superclass setUp creates a Client object and
-        initializes a test database"""
+        """
+        Set up the test cases' attributes.
+
+        superclass setUp creates a Client object and
+        initializes a test database.
+        """
         super().setUp()
         self.username = "testuser"
         self.password = "FatChance!"

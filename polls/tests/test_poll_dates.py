@@ -1,3 +1,4 @@
+"""Test cases for the poll dates function is_published."""
 import datetime
 
 from django.test import TestCase
@@ -7,6 +8,8 @@ from polls.models import Question
 
 def create_question(question_text, days):
     """
+    Return a Question object with given text and publication date.
+
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
@@ -16,15 +19,10 @@ def create_question(question_text, days):
 
 
 class QuestionPollDatesTests(TestCase):
-    """
-    Test question availability due to the date of the poll.
-    """
+    """Test question availability due to the date of the poll."""
 
     def test_is_published_past(self):
-        """
-        Test that a question is published in the past and ended
-        question in the past.
-        """
+        """Test the published question and ended question."""
         question = create_question(question_text="Past question.", days=-5)
         self.assertTrue(question.is_published())
 

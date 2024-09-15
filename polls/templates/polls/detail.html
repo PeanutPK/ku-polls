@@ -4,32 +4,53 @@
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 </head>
 <body>
-<form action="{% url 'polls:vote' question.id %}" method="post" class="q_vote">
-    {% csrf_token %}
+<div class="q_vote">
     <fieldset>
         <legend><h1>{{ question.question_text }}</h1></legend>
+
         <!--Handle an error message-->
         {% if messages %}
         <div class="display_message">
-            <ul class="messages" style="color: red; text-align: center">
+            <p class="messages">
                 {% for msg in messages %}
-                <p class="{{msg.tags}}"><strong>{{ msg }}</strong></p>
-                {% endfor %}
-            </ul>
+            <p class="{{msg.tags}}" style="color: red; text-align: center">
+                <strong>{{ msg }}</strong>
+            </p>
+            {% endfor %}
+            </p>
         </div>
         {% endif %}
-        <!--Form-->
-        {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-               value="{{ choice.id }}"
-               {% if user_vote and user_vote.choice.id == choice.id %}checked{% endif %}>
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
+
+        <form action="{% url 'polls:vote' question.id %}" method="post"
+              style="display: inline-block">
+            {% csrf_token %}
+            <!--Radio buttons-->
+            {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+                   value="{{ choice.id }}"
+                   {% if user_vote and user_vote.choice.id == choice.id %} checked {% endif %}>
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
     </fieldset>
+
+    <!--Vote Button-->
     <input type="submit" value="Vote" class="button">
-    <button class="button">
-        <a href="{% url 'polls:index' %}" class="button_text">Go back to voting list</a>
-    </button>
-</form>
+    </form>
+    <form action="{% url 'polls:reset' question.id %}" method="post"
+          style="display: inline-block">
+        {% csrf_token %}
+        <input type="submit" value="Remove Vote" class="button">
+    </form>
+    <a href="{% url 'polls:results' question.id %}" class="button_text">
+        <button type="button" class="button">
+            Results
+        </button>
+    </a>
+    <a href="{% url 'polls:index' %}" class="button_text">
+        <button type="button" class="button">
+            Go back to voting list
+        </button>
+    </a>
+</div>
 </body>
 </html>
