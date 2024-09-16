@@ -8,9 +8,9 @@ omit =
     __init__.py
     /usr/*           # Linux location of Python libraries
     mysite/*         # application configuration files
-    polls/migrations/      # omit migrations
-    polls/tests/           # omit unit test files and directories
-    polls/__init__.py      #omit __init__.py files
+    */migrations/      # omit migrations
+    */tests/           # omit unit test files and directories
+    */__init__.py      #omit __init__.py files
 # explicitly include the main app
 include =
     polls/*
