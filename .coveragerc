@@ -6,10 +6,11 @@ cover_pylib = False
 # omit uninteresting stuff
 omit =
     __init__.py
-    /usr/*           # Linux location of Python libraries
-    mysite/*         # application configuration files
-    */migrations/*     # omit migrations
-    */tests/*          # omit unit test files and directories
+    /usr/*                 # Linux location of Python libraries
+    mysite/*               # application configuration files
+    polls/migrations/*     # omit migrations
+    polls/tests/*          # omit unit test files and directories
+    admin.py               # admin configuration
     */__init__.py      #omit __init__.py files
 # explicitly include the main app
 include =
