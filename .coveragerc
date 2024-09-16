@@ -5,12 +5,18 @@ branch = True
 cover_pylib = False
 # omit uninteresting stuff
 omit =
+    # init configuration
     __init__.py
-    /usr/*                 # Linux location of Python libraries
-    mysite/*               # application configuration files
-    polls/migrations/*     # omit migrations
-    polls/tests/*          # omit unit test files and directories
-    admin.py               # admin configuration
+    # Linux location of Python libraries
+    /usr/*
+    # application configuration files
+    mysite/*
+    # omit migrations
+    polls/migrations/*
+    # omit unit test files and directories
+    polls/tests/*
+    # admin configuration
+    admin.py
     */__init__.py      #omit __init__.py files
 # explicitly include the main app
 include =
