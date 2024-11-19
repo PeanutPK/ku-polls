@@ -56,3 +56,17 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Requirements](../../wiki/Requirements)
 - [Project Plan](../../wiki/Project%20Plan)
 - [Domain Model](../../wiki/Domain%20Model)
+
+To run docker
+- build `docker build -t ku-polls .`
+- run `docker run --rm -d -p 8000:8000 ku-polls`
+
+To run docker compose
+- build `docker compose --env-file docker.env up --build`
+  - If the data isn't shown properly
+    - Open docker desktop and go to exec in app section and run
+        - `python ./manage.py migrate`
+        - `python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json`
+        ![docker_img.png](images/dockerhome.png)
+        ![exec.png](images/dockerexec.png)
+- stop `docker compose down`
